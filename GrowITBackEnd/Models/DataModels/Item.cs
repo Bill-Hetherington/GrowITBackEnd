@@ -10,7 +10,7 @@
         public string? Category { get; set; }
 
         //foreign key bit
-        public ICollection<Cart_Items> cart_Items { get; set; }
+       // public ICollection<Cart_Items> cart_Items { get; set; }
         public ICollection<Wishlist_Items> wishlist_Items { get;set; }
         public ICollection<Order_Items> order_items { get; set; }
     }

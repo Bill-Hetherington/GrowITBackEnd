@@ -20,9 +20,9 @@ namespace PeoplAPV2.Models.AuthModels
 
         //reference to every table that relates to ApplicationUser
         public ICollection<Support_Tickets>? Tickets { get; set; }
-        public ICollection<Orders> Orders { get; set; }
-        public ICollection<Cart> Carts { get; set; }
-        public ICollection<Wishlist> Wishlist { get; set; }
+        public ICollection<Orders>? Orders { get; set; }
+       // public ICollection<Cart> Carts { get; set; }
+        public ICollection<Wishlist>? Wishlist { get; set; }
 
     }
 }

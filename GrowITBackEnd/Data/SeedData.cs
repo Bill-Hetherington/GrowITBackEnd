@@ -1,7 +1,6 @@
 ﻿using GrowITBackEnd.Data;
-using GrowITBackEnd.Models;
+using GrowITBackEnd.Models.DataModels;
 using Microsoft.EntityFrameworkCore;
-using PeoplAPV2.Models;
 
 namespace PeoplAPV2.Data
 {

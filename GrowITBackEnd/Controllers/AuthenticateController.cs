@@ -104,14 +104,14 @@ namespace ApiTemplate.Controllers
             }
 
             //create Cart with this user id
-            Cart cart = new()
-            {
-                UserId = user.Id,
-                Cart_Total = 0,                
-            };
-            _context.Carts.Add(cart);            
-            user.Carts.Add(cart);
-            Console.WriteLine("===================LOOK HERE QUICK================");
+            //Cart cart = new()
+            //{
+            //    UserId = user.Id,
+            //    Cart_Total = 0,                
+            //};
+            //_context.Carts.Add(cart);            
+            //user.Carts.Add(cart);
+            //Console.WriteLine("===================LOOK HERE QUICK================");
                 
             try
             {
