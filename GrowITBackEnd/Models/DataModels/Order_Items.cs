@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GrowITBackEnd.Models
+namespace GrowITBackEnd.Models.DataModels
 {
-    public class Order_Items 
+    public class Order_Items
     {
         public int OrdersID { get; set; }
         [ForeignKey("OrdersID")]
@@ -13,6 +13,6 @@ namespace GrowITBackEnd.Models
         [ForeignKey("ItemID")]
         public Item item { get; set; }
         public int Quantity { get; set; }
-       
-    }   
+
+    }
 }

@@ -2,13 +2,13 @@
 using PeoplAPV2.Models.AuthModels;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GrowITBackEnd.Models
+namespace GrowITBackEnd.Models.DataModels
 {
     public class Wishlist
     {
         [Key]
         public int WishID { get; set; }
-        public String UserId { get; set; }
+        public string UserId { get; set; }
 
         //foreign Key
         [ForeignKey("UserId")]

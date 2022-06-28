@@ -10,6 +10,7 @@ using GrowITBackEnd.Models;
 using PeoplAPV2.Models.AuthModels;
 using Microsoft.AspNetCore.Identity;
 using ApiTemplate.Models.AuthModels.JWTAuthentication.NET6._0.Auth;
+using GrowITBackEnd.Models.RequestsModels;
 
 namespace GrowITBackEnd.Controllers
 {
@@ -50,24 +51,24 @@ namespace GrowITBackEnd.Controllers
         //Done from clicking add to cart on product or category page
         [Route("AddCartItem")]
         [HttpPost]
-        public async Task<ActionResult> AddCartItem(Item item)
+        public async Task<ActionResult> AddCartItem(AddCartItemRequest itemRequest)
         {
-            //gets logged in user
-            ApplicationUser curUser = await _userManager.GetUserAsync(User);
+            var user = await _userManager.FindByNameAsync(itemRequest.Username);
 
             //anonymous user
-            if (curUser == null)
+            if (user == null)
             {
                 return NotFound();
             }
             //cart Id of curUser
-            var cart = _context.Carts.Where(cart => cart.UserId == curUser.Id).ToListAsync();
+            var carts = _context.Carts.Where(cart => cart.UserId == user.Id).ToListAsync().Result;
+            var cart = carts[0];
 
             //add cart items to context
             Cart_Items cart_Item = new Cart_Items
             {
-                ItemID = item.ItemID,
-                CartID = cart.Id,
+                ItemID = itemRequest.ItemID,
+                CartID = cart.CartID,
                 Quantity = 1
             };
             _context.Cart_Items.Add(cart_Item);

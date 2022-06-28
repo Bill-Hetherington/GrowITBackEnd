@@ -1,4 +1,4 @@
-﻿using GrowITBackEnd.Models;
+﻿using GrowITBackEnd.Models.DataModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -12,14 +12,14 @@ namespace GrowITBackEnd.Data
         {
         }
         //reference to every Model        
-        public DbSet<Cart> Carts { get; set; }
-        public DbSet<Cart_Items> Cart_Items { get; set; }
-        public DbSet<Item> Items { get; set; }
-        public DbSet<Order_Items> Order_Items { get; set; }
-        public DbSet<Orders> Orders { get; set; }
-        public DbSet<Support_Tickets> Support_tickets { get; set; }
-        public DbSet<Wishlist> Wishlists { get; set; }
-        public DbSet<Wishlist_Items> Wishlist_Items { get; set; }
+       // public DbSet<Cart> Carts { get; set; }
+        //public DbSet<Cart_Items> Cart_Items { get; set; }
+        public DbSet<Item>? Items { get; set; }
+        public DbSet<Order_Items>? Order_Items { get; set; }
+        public DbSet<Orders>? Orders { get; set; }
+        public DbSet<Support_Tickets>? Support_tickets { get; set; }
+        public DbSet<Wishlist>? Wishlists { get; set; }
+        public DbSet<Wishlist_Items>? Wishlist_Items { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -44,8 +44,8 @@ namespace GrowITBackEnd.Data
 
 
             //composite key for Cart_Items
-            builder.Entity<Cart_Items>()
-               .HasKey(c => new { c.ItemID, c.CartID });
+            //builder.Entity<Cart_Items>()
+            //   .HasKey(c => new { c.ItemID, c.CartID });
 
             //composite key for wishlist_Items
             builder.Entity<Wishlist_Items>()

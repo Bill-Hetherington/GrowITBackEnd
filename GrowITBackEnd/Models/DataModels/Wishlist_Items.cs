@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GrowITBackEnd.Models
+namespace GrowITBackEnd.Models.DataModels
 {
     public class Wishlist_Items
     {
@@ -10,6 +10,6 @@ namespace GrowITBackEnd.Models
 
         public int ItemID { get; set; }
         [ForeignKey("ItemID")]
-        public Item Item { get; set; }  
+        public Item Item { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace GrowITBackEnd.Models
+﻿namespace GrowITBackEnd.Models.DataModels
 {
     public class Item
     {

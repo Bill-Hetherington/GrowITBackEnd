@@ -1,4 +1,4 @@
-﻿using GrowITBackEnd.Models;
+﻿using GrowITBackEnd.Models.DataModels;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 

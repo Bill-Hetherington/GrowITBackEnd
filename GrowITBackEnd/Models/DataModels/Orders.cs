@@ -1,12 +1,12 @@
 ﻿using PeoplAPV2.Models.AuthModels;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GrowITBackEnd.Models
+namespace GrowITBackEnd.Models.DataModels
 {
     public class Orders
     {
         public int OrdersID { get; set; }
-        public String UserId { get; set; }
+        public string UserId { get; set; }
         public decimal Order_Total { get; set; }
         public DateTime Date_Started { get; set; }
         public DateTime Date_Completed { get; set; }
