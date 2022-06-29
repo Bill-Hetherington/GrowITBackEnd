@@ -15,15 +15,29 @@ namespace PeoplAPV2.Data
             if (context.Database.GetPendingMigrations().Any())
             {
                 context.Database.Migrate();
-            }
-
+            }            
             if (!context.Items.Any())
             {
                 context.Items.AddRange(
-                    new Item { Item_Name="Dandelion",Price=50.60M,Description="A yellow plant with a most enticing aroma",
-                        Quantity_on_Hand=10,Category="Plant" }
+                    new Item { Item_Name = "Dandelion", Price = 50.60M, Description = "A yellow plant with a most enticing aroma",
+                        Quantity_on_Hand = 10, Category = "Plant" },
+                    new Item {
+                        Item_Name = "Aloe",
+                        Price = 80.60M,
+                        Description = "A green succulent with medicinal properties and arguably tasty juices.",
+                        Quantity_on_Hand = 20,
+                        Category = "Plant"
+                    },
+                    new Item
+                    {
+                        Item_Name = "Orchid",
+                        Price = 100.25M,
+                        Description = "A funeral plant with all the approprate shapes and colors to fit the vibe.",
+                        Quantity_on_Hand = 2,
+                        Category = "Plant"
+                    }
 
-                    );
+                    ); 
             }
 
             context.SaveChanges();

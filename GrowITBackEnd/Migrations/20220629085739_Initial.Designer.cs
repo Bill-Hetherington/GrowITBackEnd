@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GrowITBackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220628094214_Initial")]
+    [Migration("20220629085739_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -370,7 +370,7 @@ namespace GrowITBackEnd.Migrations
             modelBuilder.Entity("GrowITBackEnd.Models.DataModels.Order_Items", b =>
                 {
                     b.HasOne("GrowITBackEnd.Models.DataModels.Item", "item")
-                        .WithMany("order_items")
+                        .WithMany()
                         .HasForeignKey("ItemID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -422,7 +422,7 @@ namespace GrowITBackEnd.Migrations
             modelBuilder.Entity("GrowITBackEnd.Models.DataModels.Wishlist_Items", b =>
                 {
                     b.HasOne("GrowITBackEnd.Models.DataModels.Item", "Item")
-                        .WithMany("wishlist_Items")
+                        .WithMany()
                         .HasForeignKey("ItemID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -487,13 +487,6 @@ namespace GrowITBackEnd.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("GrowITBackEnd.Models.DataModels.Item", b =>
-                {
-                    b.Navigation("order_items");
-
-                    b.Navigation("wishlist_Items");
                 });
 
             modelBuilder.Entity("GrowITBackEnd.Models.DataModels.Orders", b =>

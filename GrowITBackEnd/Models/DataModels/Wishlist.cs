@@ -14,6 +14,6 @@ namespace GrowITBackEnd.Models.DataModels
         [ForeignKey("UserId")]
         public ApplicationUser? ApplicationUser { get; set; }
 
-        public ICollection<Wishlist_Items> wishlist_items { get; set; }
+        public ICollection<Wishlist_Items>? wishlist_items { get; set; }
     }
 }

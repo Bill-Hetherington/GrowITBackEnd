@@ -2,6 +2,7 @@
 using ApiTemplate.Models.AuthModels.JWTAuthentication.NET6._0.Auth;
 using GrowITBackEnd.Data;
 using GrowITBackEnd.Models;
+using GrowITBackEnd.Models.DataModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -103,6 +104,13 @@ namespace ApiTemplate.Controllers
                 await _userManager.AddToRoleAsync(user, UserRoles.User);
             }
 
+            //creation of wishlist
+            Wishlist wishlist = new Wishlist()
+            {
+                UserId=user.Id
+            };
+            _context.Wishlists.Add(wishlist);
+
             //create Cart with this user id
             //Cart cart = new()
             //{
@@ -119,7 +127,7 @@ namespace ApiTemplate.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                NotFound(new Response { Status = "Failed", Message = "Cart Creation failed" });
+                NotFound(new Response { Status = "Failed", Message = "User Creation failed" });
             }
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
