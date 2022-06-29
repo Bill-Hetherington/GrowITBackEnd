@@ -27,13 +27,18 @@ namespace GrowITBackEnd.Controllers
             _userManager = userManager;
         }
 
-        //this endpoint triggers after clicking checkout on maintain cart page        
+        //this endpoint triggers after clicking checkout on maintain cart page
+        //all this info is grabbed from the cookie for cart
         [HttpPost]
         [Route("createOrder")]
         public async Task<IActionResult> createOrder(createOrderRequest orderRequest)
         {
             //get user from username
             var user = await _userManager.FindByNameAsync(orderRequest.Username);
+            if(user == null)
+            {
+                NotFound();
+            }
 
             //create new order
             Orders order = new Orders()
@@ -44,6 +49,18 @@ namespace GrowITBackEnd.Controllers
             };
             //add to context and save changes
             _context.Orders.Add(order);
+
+            //create the corresponding order_items            
+           foreach(Item item in orderRequest.Items)
+            {
+                Order_Items order_Items = new Order_Items()
+                {
+                    OrdersID=order.OrdersID,
+                    ItemID=item.ItemID,
+                };
+                _context.Order_Items.Add(order_Items);
+            }
+
             try
             {
                 await _context.SaveChangesAsync();
