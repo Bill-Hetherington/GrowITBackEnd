@@ -9,7 +9,7 @@ namespace GrowITBackEnd.Models.DataModels
         public string UserId { get; set; }
         public decimal Order_Total { get; set; }
         public DateTime Date_Started { get; set; }
-        public DateTime Date_Completed { get; set; }
+        public DateTime? Date_Completed { get; set; }
 
         //foreign Key
         [ForeignKey("UserId")]

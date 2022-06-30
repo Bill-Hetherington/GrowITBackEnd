@@ -1,6 +1,7 @@
 ﻿using GrowITBackEnd.Data;
 using GrowITBackEnd.Models.DataModels;
 using Microsoft.EntityFrameworkCore;
+using PeoplAPV2.Models.AuthModels;
 
 namespace PeoplAPV2.Data
 {
@@ -15,7 +16,8 @@ namespace PeoplAPV2.Data
             if (context.Database.GetPendingMigrations().Any())
             {
                 context.Database.Migrate();
-            }            
+            }           
+            //add some items
             if (!context.Items.Any())
             {
                 context.Items.AddRange(

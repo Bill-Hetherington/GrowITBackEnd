@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GrowITBackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220629134504_Initial")]
+    [Migration("20220630082337_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,14 +63,9 @@ namespace GrowITBackEnd.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("OrdersID", "ItemID");
 
                     b.HasIndex("ItemID");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Order_Items");
                 });
@@ -83,10 +78,7 @@ namespace GrowITBackEnd.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrdersID"), 1L, 1);
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("Date_Completed")
+                    b.Property<DateTime?>("Date_Completed")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("Date_Started")
@@ -97,11 +89,11 @@ namespace GrowITBackEnd.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("OrdersID");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -384,14 +376,10 @@ namespace GrowITBackEnd.Migrations
                         .IsRequired();
 
                     b.HasOne("GrowITBackEnd.Models.DataModels.Orders", "orders")
-                        .WithMany()
+                        .WithMany("order_items")
                         .HasForeignKey("OrdersID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("GrowITBackEnd.Models.DataModels.Orders", null)
-                        .WithMany("order_items")
-                        .HasForeignKey("UserId");
 
                     b.Navigation("item");
 
@@ -400,9 +388,13 @@ namespace GrowITBackEnd.Migrations
 
             modelBuilder.Entity("GrowITBackEnd.Models.DataModels.Orders", b =>
                 {
-                    b.HasOne("PeoplAPV2.Models.AuthModels.ApplicationUser", null)
+                    b.HasOne("PeoplAPV2.Models.AuthModels.ApplicationUser", "ApplicationUser")
                         .WithMany("Orders")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("GrowITBackEnd.Models.DataModels.Support_Tickets", b =>

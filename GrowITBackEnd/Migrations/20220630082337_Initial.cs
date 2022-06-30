@@ -180,20 +180,20 @@ namespace GrowITBackEnd.Migrations
                 {
                     OrdersID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Order_Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Date_Started = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Date_Completed = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Date_Completed = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrdersID);
                     table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Orders_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -241,8 +241,7 @@ namespace GrowITBackEnd.Migrations
                 {
                     OrdersID = table.Column<int>(type: "int", nullable: false),
                     ItemID = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true)
+                    Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -259,11 +258,6 @@ namespace GrowITBackEnd.Migrations
                         principalTable: "Orders",
                         principalColumn: "OrdersID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Order_Items_Orders_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Orders",
-                        principalColumn: "OrdersID");
                 });
 
             migrationBuilder.CreateTable(
@@ -335,14 +329,9 @@ namespace GrowITBackEnd.Migrations
                 column: "ItemID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_Items_UserId",
-                table: "Order_Items",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_ApplicationUserId",
+                name: "IX_Orders_UserId",
                 table: "Orders",
-                column: "ApplicationUserId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Support_tickets_UserId",

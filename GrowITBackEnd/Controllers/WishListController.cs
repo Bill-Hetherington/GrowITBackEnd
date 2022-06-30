@@ -31,7 +31,7 @@ namespace GrowITBackEnd.Controllers
         {
             //get wishlist of user requesting
             var user = await _userManager.FindByNameAsync(wishlistRequest.Username);
-            var wishlist = (Wishlist)_context.Wishlists.Where(wishlist1 => wishlist1.UserId == user.Id).FirstOrDefault();
+            var wishlist = _context.Wishlists.Where(wishlist1 => wishlist1.UserId == user.Id).FirstOrDefault();
             if (wishlist == null)
             {
                 return NotFound();
