@@ -10,10 +10,12 @@ namespace GrowITBackEnd.Models.DataModels
         public int SuppID { get; set; }
 
         public DateTime Date_Generated { get; set; }
+        public string? Description { get; set; }
 
         //foreign key
-        public string UserId { get; set; }
         [ForeignKey("UserId")]
+        public string UserId { get; set; }
+
         public ApplicationUser? ApplicationUser { get; set; }
     }
 }

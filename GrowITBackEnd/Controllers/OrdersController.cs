@@ -90,58 +90,39 @@ namespace GrowITBackEnd.Controllers
         //Triggered: admin clicks view Orders
         [HttpGet]
         [Route("GetAllOrders")]
-        public Task<ActionResult<ICollection<OrdersReturn>>> GetAllOrders()
-        {            
-            List<OrdersReturn> allOrders = new List<OrdersReturn>();
-            //make a copy list of Orders
-            //did this cause i don't understand async and await
-            List<Orders> tempOrders=new List<Orders>();
-            foreach(Orders orders in _context.Orders)
+        public List<OrdersReturn> GetAllOrders()
+        {                       
+            var allOrders=_context.Orders.ToListAsync().Result;
+            //Declaring list for our request
+            List<OrdersReturn> ordersReturns = new List<OrdersReturn>();
+            //temp list for order-Items            
+            foreach(var order in allOrders)
             {
-                tempOrders.Add(orders);
-            }
-            //temp list for order-Items
-            List<Order_Items> tempOrdersItems = new List<Order_Items>();
-            foreach (Order_Items orders in _context.Order_Items)
-            {
-                tempOrdersItems.Add(orders);
-            }
-
-            foreach (Orders order in tempOrders)
-            {
-                //fill list of items in each order
-                List<ItemsInOrder> itemsInOrders = new List<ItemsInOrder>();                
-                
-                foreach (Order_Items order_Items in tempOrdersItems)
-                {
-                    if(order_Items.OrdersID == order.OrdersID)
-                    {
-                        var item = _context.Items.Where(item1 => item1.ItemID == order_Items.ItemID).FirstOrDefault();
-                        if (item == null)
-                        {
-                            return NotFound();
-                        }
-                        itemsInOrders.Add(new ItemsInOrder
-                        {
-                            ItemID = item.ItemID,
-                            Item_Name = item.Item_Name,
-                            Price = item.Price,
-                            Quantity = order_Items.Quantity
-                        });
-                    }
-                }
-                //add to return list
-                allOrders.Add(new OrdersReturn
-                {
+                //Mapping of this temp
+                OrdersReturn tempOrdersReturn = new OrdersReturn{
                     OrdersID = order.OrdersID,
                     UserId = order.UserId,
                     Order_Total = order.Order_Total,
                     Date_Started = order.Date_Started,
-                    Date_Completed = order.Date_Completed,
-                    itemsInOrder = itemsInOrders
-                }); 
+                    Date_Completed = order.Date_Completed,                    
+                };
+                var itemsInOrder = _context.Order_Items.Where(o => o.OrdersID == order.OrdersID).ToListAsync().Result;
+                foreach(var item in itemsInOrder)
+                {
+                    //get item info
+                    var tempItem=_context.Items.FindAsync(item.ItemID).Result;
+                    ItemsInOrder tempItemInOrder = new ItemsInOrder
+                    {
+                        ItemID = tempItem.ItemID,
+                        Item_Name=tempItem.Item_Name,
+                        Price = tempItem.Price,
+                        Quantity=item.Quantity
+                    };
+                    tempOrdersReturn.itemsInOrder.Add(tempItemInOrder);
+                }
+                ordersReturns.Add(tempOrdersReturn);
             }
-            return allOrders;
+            return ordersReturns;
         }
 
         //Triggered: clicking Complete button on a order which is outstanding
@@ -177,9 +158,8 @@ namespace GrowITBackEnd.Controllers
             _context.Orders.Where(order => order.OrdersID == orderID).FirstOrDefault().Date_Completed = DateTime.Now;
             //save chanegs
             await _context.SaveChangesAsync();
-            return Ok(new Response { Status = "Success", Message = "Order created successfully!" });
-        }
-
+            return Ok(new Response { Status = "Success", Message = "Order completed successfully!" });
+        }        
         private bool OrdersExists(int id)
         {
             return (_context.Orders?.Any(e => e.OrdersID == id)).GetValueOrDefault();

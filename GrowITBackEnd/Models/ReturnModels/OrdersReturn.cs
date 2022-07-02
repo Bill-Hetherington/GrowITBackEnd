@@ -7,7 +7,7 @@
         public decimal Order_Total { get; set; }
         public DateTime Date_Started { get; set; }
         public DateTime? Date_Completed { get; set; }
-        public List<ItemsInOrder>? itemsInOrder { get; set; }        
+        public List<ItemsInOrder>? itemsInOrder { get; set; } = new List<ItemsInOrder>();     
        
     }
     public class ItemsInOrder
