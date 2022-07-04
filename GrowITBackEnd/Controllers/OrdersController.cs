@@ -125,6 +125,46 @@ namespace GrowITBackEnd.Controllers
             return ordersReturns;
         }
 
+        //Triggered: User clicks view past orders
+        [HttpGet]
+        [Route("GetUserOrders")]
+        public async Task<List<OrdersReturn>> GetUserOrders(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            var allUserOrders = _context.Orders.Where(o=>o.UserId==user.Id).ToListAsync().Result;
+            //Declaring list for our request
+            List<OrdersReturn> ordersReturns = new List<OrdersReturn>();
+            //temp list for order-Items            
+            foreach (var order in allUserOrders)
+            {
+                //Mapping of this temp
+                OrdersReturn tempOrdersReturn = new OrdersReturn
+                {
+                    OrdersID = order.OrdersID,
+                    UserId = order.UserId,
+                    Order_Total = order.Order_Total,
+                    Date_Started = order.Date_Started,
+                    Date_Completed = order.Date_Completed,
+                };
+                var itemsInOrder = _context.Order_Items.Where(o => o.OrdersID == order.OrdersID).ToListAsync().Result;
+                foreach (var item in itemsInOrder)
+                {
+                    //get item info
+                    var tempItem = _context.Items.FindAsync(item.ItemID).Result;
+                    ItemsInOrder tempItemInOrder = new ItemsInOrder
+                    {
+                        ItemID = tempItem.ItemID,
+                        Item_Name = tempItem.Item_Name,
+                        Price = tempItem.Price,
+                        Quantity = item.Quantity
+                    };
+                    tempOrdersReturn.itemsInOrder.Add(tempItemInOrder);
+                }
+                ordersReturns.Add(tempOrdersReturn);
+            }
+            return ordersReturns;
+        }
+
         //Triggered: clicking Complete button on a order which is outstanding
         //item quantity_onHand is updated and date completed is updated
         [HttpPost]

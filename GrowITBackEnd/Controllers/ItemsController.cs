@@ -34,6 +34,22 @@ namespace GrowITBackEnd.Controllers
             return _context.Items.Where(i => i.Category == category).ToListAsync().Result;
         }
 
+        //Gives type Error
+        //Triggered: user clicks on specific item from category page/home page
+        //get item for that selected item
+        [HttpGet]
+        [Route("GetSelectedItem")]
+        public Item GetSelectedItem(Item item)
+        {
+            var selectedItem=_context.Items.Where(i=>i.ItemID==item.ItemID).FirstOrDefault();
+            if (selectedItem == null)
+            {
+               NotFound(new Response { Status = "Failed", Message = "Could not find item" });
+                return null;
+            }
+            return selectedItem;
+        }
+
         //Triggered: Admin creates item
         [HttpPost]
         [Route("CreateItem")]
