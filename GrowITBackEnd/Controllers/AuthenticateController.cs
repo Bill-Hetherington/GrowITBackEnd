@@ -1,7 +1,6 @@
 ﻿using ApiTemplate.Models.AuthModels;
 using ApiTemplate.Models.AuthModels.JWTAuthentication.NET6._0.Auth;
 using GrowITBackEnd.Data;
-using GrowITBackEnd.Models;
 using GrowITBackEnd.Models.DataModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +11,7 @@ using PeoplAPV2.Models.AuthModels;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using GrowITBackEnd.Models.ReturnModels;
 
 namespace ApiTemplate.Controllers
 {
@@ -40,7 +40,7 @@ namespace ApiTemplate.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login([FromBody] LoginModel model)
+        public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
@@ -61,10 +61,11 @@ namespace ApiTemplate.Controllers
 
                 var token = GetToken(authClaims);
 
-                return Ok(new
+                return Ok(new LoginResponse
                 {
+                    role = userRoles[0],
                     token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
+                    expiration = token.ValidTo.ToString()
                 });
             }
             return Unauthorized();
