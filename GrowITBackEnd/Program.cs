@@ -2,6 +2,7 @@ using GrowITBackEnd.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using PeoplAPV2.Data;
 using PeoplAPV2.Models.AuthModels;
@@ -69,6 +70,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//Static Files for Images
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(
+                    Directory.GetCurrentDirectory(), "Images")),
+    RequestPath = "/Images"
+});
 
 //Cors
 app.UseCors(MyAllowSpecificOrigins);
