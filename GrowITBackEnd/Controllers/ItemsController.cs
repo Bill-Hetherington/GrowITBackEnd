@@ -1,6 +1,8 @@
-﻿using ApiTemplate.Models.AuthModels.JWTAuthentication.NET6._0.Auth;
+﻿using ApiTemplate.Models.AuthModels;
+using ApiTemplate.Models.AuthModels.JWTAuthentication.NET6._0.Auth;
 using GrowITBackEnd.Data;
 using GrowITBackEnd.Models.DataModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +20,7 @@ namespace GrowITBackEnd.Controllers
         }
 
         //Triggered: Admin 
+        [Authorize(Roles =UserRoles.User)]
         [HttpGet]
         [Route("GetAllItems")]
         public async Task<List<Item>> GetAllItems()

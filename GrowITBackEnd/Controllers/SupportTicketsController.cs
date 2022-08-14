@@ -40,7 +40,7 @@ namespace GrowITBackEnd.Controllers
                 Date_Generated=DateTime.Now,
                 Description=supportRequest.Description,
                 UserId=user.Id,
-                ApplicationUser = user
+                //ApplicationUser = user
             };
             _context.Support_tickets.Add(supportTicket);
             try

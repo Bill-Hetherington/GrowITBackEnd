@@ -8,13 +8,12 @@ namespace GrowITBackEnd.Models.DataModels
     {
         [Key]
         public int SuppID { get; set; }
-
+        public string UserId { get; set; }
         public DateTime Date_Generated { get; set; }
         public string? Description { get; set; }
 
         //foreign key
-        [ForeignKey("UserId")]
-        public string UserId { get; set; }
+        [ForeignKey("UserId")]       
 
         public ApplicationUser? ApplicationUser { get; set; }
     }
