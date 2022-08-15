@@ -21,8 +21,7 @@ namespace GrowITBackEnd.Controllers
             _env = env;
         }
 
-        //Triggered: Admin 
-        [Authorize(Roles =UserRoles.User)]
+        //Triggered: Admin         
         [HttpGet]
         [Route("GetAllItems")]
         public async Task<List<Item>> GetAllItems()
