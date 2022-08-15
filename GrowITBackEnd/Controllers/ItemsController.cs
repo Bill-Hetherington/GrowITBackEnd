@@ -14,9 +14,11 @@ namespace GrowITBackEnd.Controllers
     public class ItemsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        public ItemsController(ApplicationDbContext context)
+        private readonly IWebHostEnvironment _env;
+        public ItemsController(ApplicationDbContext context, IWebHostEnvironment env)
         {
-            _context = context;            
+            _context = context;
+            _env = env;
         }
 
         //Triggered: Admin 
@@ -130,6 +132,31 @@ namespace GrowITBackEnd.Controllers
         private bool ItemExists(int id)
         {
             return (_context.Items?.Any(e => e.ItemID == id)).GetValueOrDefault();
+        }
+
+        //Api Endpoing for saving images to backend
+        [Route("SaveImage")]
+        [HttpPost]
+        public JsonResult SaveFile()
+        {
+            try
+            {
+                var httpRequest = Request.Form;
+                var postedFile = httpRequest.Files[0];
+                string filename = postedFile.FileName;
+                var physicalPath = _env.ContentRootPath + "/Images/" + filename;
+
+                using (var strean = new FileStream(physicalPath, FileMode.Create))
+                {
+                    postedFile.CopyTo(strean);
+                }
+                return new JsonResult(filename);
+
+            }
+            catch (Exception)
+            {
+                return new JsonResult("default.png");
+            }
         }
     }
 }
