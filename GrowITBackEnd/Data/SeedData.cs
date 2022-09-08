@@ -41,8 +41,88 @@ namespace PeoplAPV2.Data
                         Quantity_on_Hand = 2,
                         Category = "Plant",
                         imageURL = "https://localhost:5000/images/default.png"
-                    }
-
+                    },
+                     new Item
+                     {
+                         Item_Name = "Brown Soil",
+                         Price = 40.25M,
+                         Description = "It's brown soil yea not much to be said really you put seeds in it, then at some point a plant pops out",
+                         Quantity_on_Hand = 20,
+                         Category = "Soil",
+                         imageURL = "https://localhost:5000/images/default.png"
+                     },
+                     new Item
+                     {
+                         Item_Name = "Browner Soil",
+                         Price = 41.25M,
+                         Description = "It's browner soil yea not much to be said really you put seeds in it, then at some point a plant pops out",
+                         Quantity_on_Hand = 20,
+                         Category = "Soil",
+                         imageURL = "https://localhost:5000/images/default.png"
+                     },
+                     new Item
+                     {
+                         Item_Name = "Brownest Soil",
+                         Price = 42.25M,
+                         Description = "It's the brownest soil yea not much to be said really you put seeds in it, then at some point a plant pops out",
+                         Quantity_on_Hand = 20,
+                         Category = "Soil",
+                         imageURL = "https://localhost:5000/images/default.png"
+                     },
+                     new Item
+                     {
+                         Item_Name = "Spade",
+                         Price = 500.99M,
+                         Description = "It's like a flatter shovel",
+                         Quantity_on_Hand = 1,
+                         Category = "Tool",
+                         imageURL = "https://localhost:5000/images/default.png"
+                     },
+                     new Item
+                     {
+                         Item_Name = "Shovel",
+                         Price = 450.99M,
+                         Description = "Some say it's a curvy spade",
+                         Quantity_on_Hand = 0,
+                         Category = "Tool",
+                         imageURL = "https://localhost:5000/images/default.png"
+                     },
+                     new Item
+                     {
+                         Item_Name = "Trowel",
+                         Price = 50.99M,
+                         Description = "A really small shovel... sort of",
+                         Quantity_on_Hand = 6,
+                         Category = "Tool",
+                         imageURL = "https://localhost:5000/images/default.png"
+                     },
+                     new Item
+                     {
+                         Item_Name = "Round Pot",
+                         Price = 125.99M,
+                         Description = "A particularly not square pot, do not stack these it'd be bad",
+                         Quantity_on_Hand = 9,
+                         Category = "Pot",
+                         imageURL = "https://localhost:5000/images/default.png"
+                     },
+                      new Item
+                      {
+                          Item_Name = "Square Pot",
+                          Price = 130.99M,
+                          Description = "Beautifully parallel sides and potentially stackable. I wouldn't but don't let me stop you",
+                          Quantity_on_Hand = 9,
+                          Category = "Pot",
+                          imageURL = "https://localhost:5000/images/default.png"
+                      },
+                      new Item
+                      {
+                          Item_Name = "Weird Pot",
+                          Price = 1300.99M,
+                          Description = "Look at it, it's weird looking hence the name.",
+                          Quantity_on_Hand = 9,
+                          Category = "Pot",
+                          imageURL = "https://localhost:5000/images/default.png"
+                      }
                     ); 
             }
 

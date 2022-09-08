@@ -46,7 +46,6 @@ namespace GrowITBackEnd.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("imageURL")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ItemID");
