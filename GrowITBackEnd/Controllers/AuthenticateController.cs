@@ -63,6 +63,7 @@ namespace ApiTemplate.Controllers
 
                 return Ok(new LoginResponse
                 {
+                    username = user.UserName,
                     role = userRoles[0],
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo.ToString()

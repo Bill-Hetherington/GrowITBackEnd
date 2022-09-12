@@ -43,9 +43,9 @@ namespace GrowITBackEnd.Controllers
         //get item for that selected item
         [HttpGet]
         [Route("GetSelectedItem")]
-        public Item GetSelectedItem(Item item)
+        public Item GetSelectedItem(int id)
         {
-            var selectedItem=_context.Items.Where(i=>i.ItemID==item.ItemID).FirstOrDefault();
+            var selectedItem=_context.Items.Where(i=>i.ItemID==id).FirstOrDefault();
             if (selectedItem == null)
             {
                NotFound(new Response { Status = "Failed", Message = "Could not find item" });

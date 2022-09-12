@@ -17,13 +17,13 @@ namespace PeoplAPV2.Data
             {
                 context.Database.Migrate();
             }           
-            //add some items
+            //add some items           
             if (!context.Items.Any())
             {
                 context.Items.AddRange(
                     new Item { Item_Name = "Dandelion", Price = 50.60M, Description = "A yellow plant with a most enticing aroma",
                         Quantity_on_Hand = 10, Category = "Plant" ,
-                        imageURL = "https://localhost:5000/images/default.png"
+                        imageURL = "https://localhost:5000/images/DandelionPlant.jpg"
                     },
                     new Item {
                         Item_Name = "Aloe",
@@ -31,7 +31,7 @@ namespace PeoplAPV2.Data
                         Description = "A green succulent with medicinal properties and arguably tasty juices.",
                         Quantity_on_Hand = 20,
                         Category = "Plant",
-                        imageURL = "https://localhost:5000/images/default.png"
+                        imageURL = "https://localhost:5000/images/AloePlant.jpg"
                     },
                     new Item
                     {
@@ -40,7 +40,7 @@ namespace PeoplAPV2.Data
                         Description = "A funeral plant with all the approprate shapes and colors to fit the vibe.",
                         Quantity_on_Hand = 2,
                         Category = "Plant",
-                        imageURL = "https://localhost:5000/images/default.png"
+                        imageURL = "https://localhost:5000/images/OrchidPlant.png"
                     },
                      new Item
                      {
@@ -49,7 +49,7 @@ namespace PeoplAPV2.Data
                          Description = "It's brown soil yea not much to be said really you put seeds in it, then at some point a plant pops out",
                          Quantity_on_Hand = 20,
                          Category = "Soil",
-                         imageURL = "https://localhost:5000/images/default.png"
+                         imageURL = "https://localhost:5000/images/soil.jpg"
                      },
                      new Item
                      {
@@ -58,7 +58,7 @@ namespace PeoplAPV2.Data
                          Description = "It's browner soil yea not much to be said really you put seeds in it, then at some point a plant pops out",
                          Quantity_on_Hand = 20,
                          Category = "Soil",
-                         imageURL = "https://localhost:5000/images/default.png"
+                         imageURL = "https://localhost:5000/images/soil.jpg"
                      },
                      new Item
                      {
@@ -67,7 +67,7 @@ namespace PeoplAPV2.Data
                          Description = "It's the brownest soil yea not much to be said really you put seeds in it, then at some point a plant pops out",
                          Quantity_on_Hand = 20,
                          Category = "Soil",
-                         imageURL = "https://localhost:5000/images/default.png"
+                         imageURL = "https://localhost:5000/images/soil.jpg"
                      },
                      new Item
                      {
@@ -76,7 +76,7 @@ namespace PeoplAPV2.Data
                          Description = "It's like a flatter shovel",
                          Quantity_on_Hand = 1,
                          Category = "Tool",
-                         imageURL = "https://localhost:5000/images/default.png"
+                         imageURL = "https://localhost:5000/images/spade.png"
                      },
                      new Item
                      {
@@ -85,7 +85,7 @@ namespace PeoplAPV2.Data
                          Description = "Some say it's a curvy spade",
                          Quantity_on_Hand = 0,
                          Category = "Tool",
-                         imageURL = "https://localhost:5000/images/default.png"
+                         imageURL = "https://localhost:5000/images/shovel.jpg"
                      },
                      new Item
                      {
@@ -94,7 +94,7 @@ namespace PeoplAPV2.Data
                          Description = "A really small shovel... sort of",
                          Quantity_on_Hand = 6,
                          Category = "Tool",
-                         imageURL = "https://localhost:5000/images/default.png"
+                         imageURL = "https://localhost:5000/images/trowel.jpg"
                      },
                      new Item
                      {
@@ -103,7 +103,7 @@ namespace PeoplAPV2.Data
                          Description = "A particularly not square pot, do not stack these it'd be bad",
                          Quantity_on_Hand = 9,
                          Category = "Pot",
-                         imageURL = "https://localhost:5000/images/default.png"
+                         imageURL = "https://localhost:5000/images/roundPot.png"
                      },
                       new Item
                       {
@@ -112,7 +112,7 @@ namespace PeoplAPV2.Data
                           Description = "Beautifully parallel sides and potentially stackable. I wouldn't but don't let me stop you",
                           Quantity_on_Hand = 9,
                           Category = "Pot",
-                          imageURL = "https://localhost:5000/images/default.png"
+                          imageURL = "https://localhost:5000/images/squarePot.jpg"
                       },
                       new Item
                       {
@@ -121,7 +121,7 @@ namespace PeoplAPV2.Data
                           Description = "Look at it, it's weird looking hence the name.",
                           Quantity_on_Hand = 9,
                           Category = "Pot",
-                          imageURL = "https://localhost:5000/images/default.png"
+                          imageURL = "https://localhost:5000/images/weirdPot.jpg"
                       }
                     ); 
             }
