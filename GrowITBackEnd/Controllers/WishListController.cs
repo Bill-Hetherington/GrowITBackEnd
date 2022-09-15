@@ -54,6 +54,16 @@ namespace GrowITBackEnd.Controllers
             return itemList;
         }
 
+        [HttpPost]
+        [Route("getWishList")]
+        public async Task<ActionResult<int>> getWishList(getWishlistContentRequest wishlistRequest)
+        {
+            //get wishlist of user requesting
+            var user = await _userManager.FindByNameAsync(wishlistRequest.Username);
+            var wishlist = _context.Wishlists.Where(wishlist1 => wishlist1.UserId == user.Id).FirstOrDefault();
+            return wishlist.WishID;
+        }
+
         //create a wishlist item then add it to the wishlist of the user
         //add item to wishlist
         //triggered from user clicking add to wishlist on item page
