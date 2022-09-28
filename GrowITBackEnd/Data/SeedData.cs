@@ -17,12 +17,12 @@ namespace PeoplAPV2.Data
             {
                 context.Database.Migrate();
             }           
-            //add some items           
+            //add some items            
             if (!context.Items.Any())
             {
                 context.Items.AddRange(
                     new Item { Item_Name = "Dandelion", Price = 50.60M, Description = "A yellow plant with a most enticing aroma",
-                        Quantity_on_Hand = 10, Category = "Plant" ,
+                        Quantity_on_Hand = 20, Category = "Plant" ,
                         imageURL = "https://localhost:5000/images/DandelionPlant.jpg"
                     },
                     new Item {
@@ -31,14 +31,15 @@ namespace PeoplAPV2.Data
                         Description = "A green succulent with medicinal properties and arguably tasty juices.",
                         Quantity_on_Hand = 20,
                         Category = "Plant",
-                        imageURL = "https://localhost:5000/images/AloePlant.jpg"
+                        imageURL = "https://localhost:5000/images/AloePlant.jpg",
+                        hotDeal=true
                     },
                     new Item
                     {
                         Item_Name = "Orchid",
                         Price = 100.25M,
                         Description = "A funeral plant with all the approprate shapes and colors to fit the vibe.",
-                        Quantity_on_Hand = 2,
+                        Quantity_on_Hand = 20,
                         Category = "Plant",
                         imageURL = "https://localhost:5000/images/OrchidPlant.png"
                     },
@@ -49,7 +50,8 @@ namespace PeoplAPV2.Data
                          Description = "It's brown soil yea not much to be said really you put seeds in it, then at some point a plant pops out",
                          Quantity_on_Hand = 20,
                          Category = "Soil",
-                         imageURL = "https://localhost:5000/images/soil.jpg"
+                         imageURL = "https://localhost:5000/images/soil.jpg",
+                         hotDeal = true
                      },
                      new Item
                      {
@@ -74,7 +76,7 @@ namespace PeoplAPV2.Data
                          Item_Name = "Spade",
                          Price = 500.99M,
                          Description = "It's like a flatter shovel",
-                         Quantity_on_Hand = 1,
+                         Quantity_on_Hand = 20,
                          Category = "Tool",
                          imageURL = "https://localhost:5000/images/spade.png"
                      },
@@ -83,7 +85,7 @@ namespace PeoplAPV2.Data
                          Item_Name = "Shovel",
                          Price = 450.99M,
                          Description = "Some say it's a curvy spade",
-                         Quantity_on_Hand = 0,
+                         Quantity_on_Hand = 20,
                          Category = "Tool",
                          imageURL = "https://localhost:5000/images/shovel.jpg"
                      },
@@ -92,7 +94,7 @@ namespace PeoplAPV2.Data
                          Item_Name = "Trowel",
                          Price = 50.99M,
                          Description = "A really small shovel... sort of",
-                         Quantity_on_Hand = 6,
+                         Quantity_on_Hand = 20,
                          Category = "Tool",
                          imageURL = "https://localhost:5000/images/trowel.jpg"
                      },
@@ -101,7 +103,7 @@ namespace PeoplAPV2.Data
                          Item_Name = "Round Pot",
                          Price = 125.99M,
                          Description = "A particularly not square pot, do not stack these it'd be bad",
-                         Quantity_on_Hand = 9,
+                         Quantity_on_Hand = 20,
                          Category = "Pot",
                          imageURL = "https://localhost:5000/images/roundPot.png"
                      },
@@ -110,16 +112,17 @@ namespace PeoplAPV2.Data
                           Item_Name = "Square Pot",
                           Price = 130.99M,
                           Description = "Beautifully parallel sides and potentially stackable. I wouldn't but don't let me stop you",
-                          Quantity_on_Hand = 9,
+                          Quantity_on_Hand = 20,
                           Category = "Pot",
-                          imageURL = "https://localhost:5000/images/squarePot.jpg"
+                          imageURL = "https://localhost:5000/images/squarePot.jpg",
+                          hotDeal = true
                       },
                       new Item
                       {
                           Item_Name = "Weird Pot",
                           Price = 1300.99M,
                           Description = "Look at it, it's weird looking hence the name.",
-                          Quantity_on_Hand = 9,
+                          Quantity_on_Hand =20,
                           Category = "Pot",
                           imageURL = "https://localhost:5000/images/weirdPot.jpg"
                       }

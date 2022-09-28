@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GrowITBackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220905123141_Initial")]
-    partial class Initial
+    [Migration("20220928161852_ini")]
+    partial class ini
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,9 @@ namespace GrowITBackEnd.Migrations
 
                     b.Property<int>("Quantity_on_Hand")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("hotDeal")
+                        .HasColumnType("bit");
 
                     b.Property<string>("imageURL")
                         .HasColumnType("nvarchar(max)");

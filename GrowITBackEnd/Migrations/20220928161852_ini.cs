@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GrowITBackEnd.Migrations
 {
-    public partial class Initial : Migration
+    public partial class ini : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,7 +62,8 @@ namespace GrowITBackEnd.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Quantity_on_Hand = table.Column<int>(type: "int", nullable: false),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    imageURL = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    imageURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    hotDeal = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
