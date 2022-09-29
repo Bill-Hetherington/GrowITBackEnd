@@ -45,6 +45,9 @@ namespace GrowITBackEnd.Migrations
                     b.Property<int>("Quantity_on_Hand")
                         .HasColumnType("int");
 
+                    b.Property<bool?>("hotDeal")
+                        .HasColumnType("bit");
+
                     b.Property<string>("imageURL")
                         .HasColumnType("nvarchar(max)");
 
