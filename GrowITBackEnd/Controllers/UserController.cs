@@ -26,7 +26,8 @@ namespace GrowITBackEnd.Controllers
         [Route("GetUserDetails")]
         public async Task<ApplicationUser> GetUserDetails(string username)
         {
-            return   await _userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByNameAsync(username);
+            return user;
         }
 
         //Triggered: user clicks save changes on profile edit page

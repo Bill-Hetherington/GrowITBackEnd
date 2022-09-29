@@ -107,7 +107,7 @@ namespace GrowITBackEnd.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(new Response { Status = "Success", Message = "Item Updated Succesfully" });
         }
 
         //Triggered: Admin deletes item
