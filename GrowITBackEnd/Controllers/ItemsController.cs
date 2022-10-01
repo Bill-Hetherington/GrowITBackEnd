@@ -2,9 +2,11 @@
 using ApiTemplate.Models.AuthModels.JWTAuthentication.NET6._0.Auth;
 using GrowITBackEnd.Data;
 using GrowITBackEnd.Models.DataModels;
+using GrowITBackEnd.Models.RequestsModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 
 namespace GrowITBackEnd.Controllers
@@ -57,7 +59,7 @@ namespace GrowITBackEnd.Controllers
         //Triggered: Admin creates item
         [HttpPost]
         [Route("CreateItem")]
-        public async Task<IActionResult> CreateItem(Item item)
+        public async Task<Item> CreateItem(Item item)
         {
             var newItem = new Item
             {                
@@ -65,18 +67,15 @@ namespace GrowITBackEnd.Controllers
                 Price=item.Price,
                 Description=item.Description,
                 Quantity_on_Hand=item.Quantity_on_Hand,
-                Category=item.Category
+                Category=item.Category,
+                imageURL=item.imageURL,
+                hotDeal=item.hotDeal,
             };
             _context.Items.Add(newItem);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                return NotFound(new Response { Status = "Failed", Message = "Item Creation failed" });
-            }
-            return Ok(new Response { Status = "Success", Message = "Item Creation Successful" });
+  
+            await _context.SaveChangesAsync();
+
+            return newItem;
         }
 
         //Triggered by admin changing details of item
@@ -111,7 +110,7 @@ namespace GrowITBackEnd.Controllers
         }
 
         //Triggered: Admin deletes item
-        [HttpDelete]
+        [HttpPost]
         [Route("DeleteItem")]
         public async Task<IActionResult> DeleteItem(Item item)
         {
@@ -136,25 +135,27 @@ namespace GrowITBackEnd.Controllers
         //Api Endpoing for saving images to backend
         [Route("SaveImage")]
         [HttpPost]
-        public JsonResult SaveFile()
+        public async Task<IActionResult> SaveFile([FromForm] FileModel file)
         {
             try
             {
                 var httpRequest = Request.Form;
-                var postedFile = httpRequest.Files[0];
-                string filename = postedFile.FileName;
-                var physicalPath = _env.ContentRootPath + "/Images/" + filename;
 
+                var physicalPath = _env.ContentRootPath + "Images\\" + file.FileName;
+                Item item = new Item { Category = file.Category, Description = file.Description, hotDeal = file.hotDeal, imageURL = file.imageURL, ItemID = file.ItemID, Item_Name = file.Item_Name, Price = Convert.ToDecimal(file.Price), Quantity_on_Hand = file.Quantity_on_Hand };
+                item.imageURL = String.Format("https://localhost:5000/Images/{0}", file.FileName);
+                item.hotDeal = null;
+                _context.Entry(item).State = EntityState.Modified;
                 using (var strean = new FileStream(physicalPath, FileMode.Create))
                 {
-                    postedFile.CopyTo(strean);
+                    file.FormFile.CopyTo(strean);
                 }
-                return new JsonResult(filename);
-
+                await _context.SaveChangesAsync();
+                return Ok(new Response { Status = "Success", Message = "Item Image Succesfully Updated" });
             }
-            catch (Exception)
+            catch
             {
-                return new JsonResult("default.png");
+                return NotFound(new Response { Status = "Success", Message = "Unable to update item image" });
             }
         }
     }

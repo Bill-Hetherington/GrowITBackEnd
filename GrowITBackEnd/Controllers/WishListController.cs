@@ -50,7 +50,6 @@ namespace GrowITBackEnd.Controllers
                 Item item=(Item)_context.Items.Where(item => item.ItemID == list[i].ItemID).FirstOrDefault();
                 itemList.Add(item);
             }
-            
             return itemList;
         }
 

@@ -81,6 +81,7 @@ app.UseStaticFiles(new StaticFileOptions
 
 //Cors
 app.UseCors(MyAllowSpecificOrigins);
+app.UseDeveloperExceptionPage();
 
 app.UseHttpsRedirection();
 
