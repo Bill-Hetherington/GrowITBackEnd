@@ -1,4 +1,5 @@
-﻿using GrowITBackEnd.Models.DataModels;
+﻿using ApiTemplate.Models.AuthModels;
+using GrowITBackEnd.Models.DataModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,7 @@ namespace GrowITBackEnd.Data
         {
         }
         //reference to every Model        
-       // public DbSet<Cart> Carts { get; set; }
+        // public DbSet<Cart> Carts { get; set; }
         //public DbSet<Cart_Items> Cart_Items { get; set; }
         public DbSet<Item>? Items { get; set; }
         public DbSet<Order_Items>? Order_Items { get; set; }
@@ -49,8 +50,7 @@ namespace GrowITBackEnd.Data
 
             //composite key for wishlist_Items
             builder.Entity<Wishlist_Items>()
-              .HasKey(c => new { c.WishID, c.ItemID });
-            
-        }
+              .HasKey(c => new { c.WishID, c.ItemID });            
+        }        
     }
 }
