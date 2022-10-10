@@ -92,5 +92,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 //should make the db for you without running db
-SeedData.EnsurePopulated(app);
+SeedData.EnsurePopulated(app.Services,app);
 app.Run();

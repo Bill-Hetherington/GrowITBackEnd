@@ -2,6 +2,7 @@
 using ApiTemplate.Models.AuthModels;
 using GrowITBackEnd.Data;
 using GrowITBackEnd.Models.DataModels;
+using GrowITBackEnd.Models.RequestsModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -11,11 +12,19 @@ namespace PeoplAPV2.Data
 {
     public static class SeedData
     {
-        public static void EnsurePopulated(IApplicationBuilder app)
+        public static async Task<IdentityResult> AssignRoles(IServiceProvider services, string username)
         {
-            ApplicationDbContext context = app.ApplicationServices
-               .CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                  
+            UserManager<ApplicationUser> _userManager = services.GetService<UserManager<ApplicationUser>>();
+            ApplicationUser user = await _userManager.FindByNameAsync(username);
+            var result = await _userManager.AddToRoleAsync(user, UserRoles.User);
+
+            return result;
+        }
+        public static void EnsurePopulated(IServiceProvider service,IApplicationBuilder builder)
+        {
+            ApplicationDbContext context = builder.ApplicationServices
+               .CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>();            
+
             List<RegisterModel> userData = new List<RegisterModel>
             {
 
@@ -97,6 +106,7 @@ namespace PeoplAPV2.Data
                 context.Database.Migrate();
             }
             //add users
+            //TODO add user role to each user
             if (!context.Users.Any())
             {
                 foreach (var newUser in userData)
@@ -118,12 +128,17 @@ namespace PeoplAPV2.Data
                     user.PasswordHash = now;
                     var _userstore = new UserStore<ApplicationUser>(context);
                     _userstore.CreateAsync(user);
-                    _userstore.AddToRoleAsync(user, "User");
+                    var temp = new RoleStore<IdentityRole>(context);
+                    temp.CreateAsync(new IdentityRole(UserRoles.User));
+                    AssignRoles(builder.ApplicationServices, user.UserName).ConfigureAwait(false);
+                    //_userstore.AddToRoleAsync(user, UserRoles.User);               
+                    
+                    context.SaveChangesAsync();
                 }
 
                 // controller.Register(newUser);
 
-                context.SaveChanges();
+                //context.SaveChanges();
                 // context.Users.Add(user);
             }
             //add some items            
@@ -243,7 +258,52 @@ namespace PeoplAPV2.Data
                       }
                     );
             }
+            //add Orders
+            if (!context.Orders.Any())
+            {
+                foreach (var user in context.Users)
+                {
+                    Orders order = new Orders()
+                    {
+                        UserId = user.Id,
+                        Order_Total = 50.60M,
+                        Date_Started = DateTime.Now,
+                        Date_Completed = null,                       
+                    };
+                    //add to context and save changes                    
+                    context.Orders.Add(order);                    
+                }                
+                foreach (var order in context.Orders)
+                {
+                    Order_Items order_Items = new Order_Items()
+                    {
+                        OrdersID=order.OrdersID,
+                        ItemID= context.Items.ElementAt(0).ItemID
+                    };
+                    context.Order_Items.Add(order_Items);
+                }                
+            }
+            //add wishlist 
+            if (!context.Wishlists.Any())
+            {
+                foreach(var user in context.Users)
+                {
+                    Wishlist wishlist = new Wishlist()
+                    {
+                        UserId = user.Id,
+                    };
+                    context.Wishlists.Add(wishlist);
+                }
 
+                foreach(var wishlist in context.Wishlists)
+                {
+                    Wishlist_Items wishlist_Items = new Wishlist_Items()
+                    {
+                        WishID=wishlist.WishID,
+                        ItemID=context.Items.ElementAt(2).ItemID
+                    };
+                }
+            }
             context.SaveChanges();
         }
     }
