@@ -12,18 +12,12 @@ namespace PeoplAPV2.Data
 {
     public static class SeedData
     {
-        public static async Task<IdentityResult> AssignRoles(IServiceProvider services, string username)
+        public async static void EnsurePopulated(IApplicationBuilder app)
         {
-            UserManager<ApplicationUser> _userManager = services.GetService<UserManager<ApplicationUser>>();
-            ApplicationUser user = await _userManager.FindByNameAsync(username);
-            var result = await _userManager.AddToRoleAsync(user, UserRoles.User);
+            ApplicationDbContext context = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-            return result;
-        }
-        public static void EnsurePopulated(IServiceProvider service,IApplicationBuilder builder)
-        {
-            ApplicationDbContext context = builder.ApplicationServices
-               .CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>();            
+            UserManager<ApplicationUser> _userManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            RoleManager<IdentityRole> _roleManager =  app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             List<RegisterModel> userData = new List<RegisterModel>
             {
@@ -105,8 +99,8 @@ namespace PeoplAPV2.Data
             {
                 context.Database.Migrate();
             }
-            //add users
-            //TODO add user role to each user
+            
+            //add some users
             if (!context.Users.Any())
             {
                 foreach (var newUser in userData)
@@ -123,24 +117,21 @@ namespace PeoplAPV2.Data
                         Address = newUser.Address,
                         LockoutEnabled = false
                     };
-                    PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
-                    var now = passwordHasher.HashPassword(user, "Password@123");
-                    user.PasswordHash = now;
-                    var _userstore = new UserStore<ApplicationUser>(context);
-                    _userstore.CreateAsync(user);
-                    var temp = new RoleStore<IdentityRole>(context);
-                    temp.CreateAsync(new IdentityRole(UserRoles.User));
-                    AssignRoles(builder.ApplicationServices, user.UserName).ConfigureAwait(false);
-                    //_userstore.AddToRoleAsync(user, UserRoles.User);               
-                    
-                    context.SaveChangesAsync();
+
+                    await _userManager.CreateAsync(user, "Password@123");
+
+                    if (!await _roleManager.RoleExistsAsync(UserRoles.User))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+                    }
+
+                    if (await _roleManager.RoleExistsAsync(UserRoles.User))
+                    {
+                        await _userManager.AddToRoleAsync(user, UserRoles.User);
+                    }
                 }
-
-                // controller.Register(newUser);
-
-                //context.SaveChanges();
-                // context.Users.Add(user);
             }
+
             //add some items            
             if (!context.Items.Any())
             {
@@ -304,6 +295,9 @@ namespace PeoplAPV2.Data
                     };
                 }
             }
+
+
+            //saving all db changes
             context.SaveChanges();
         }
     }

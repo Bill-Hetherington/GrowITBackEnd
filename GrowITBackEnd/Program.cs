@@ -33,7 +33,6 @@ builder.Services.AddCors(options =>
                       });
 });
 
-
 // Adding Authentication
 builder.Services.AddAuthentication(options =>
 {
@@ -92,5 +91,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 //should make the db for you without running db
-SeedData.EnsurePopulated(app.Services,app);
+SeedData.EnsurePopulated(app);
 app.Run();
